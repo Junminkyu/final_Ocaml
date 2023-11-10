@@ -1,14 +1,14 @@
-open Halloween
+
 
 (* These are the functions and modules I get from the module in the lib directory.
 I've called it procaml.ml there, some will probably have called it halloween.ml.
 Names may vary, but these are the things this executable needs.
 In any case, these four definitions should be the only things you need to
 change. *)
-let string_of_declaration = halloween.string_of_declaration
-let mainParser = halloween.Parser.main
-let mainLexer = halloween.Lexer.token
-module Parser : (sig exception Error end) = halloween.Parser
+let string_of_declaration = Halloween.string_of_expression
+let mainParser = Halloween.Parser.main
+let mainLexer = Halloween.Lexer.token
+module Parser : (sig exception Error end) = Halloween.Parser
 
 (* Here are the types these things have for me,
 but I'm not stating them for ocaml because there's a good chance things are

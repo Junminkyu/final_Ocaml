@@ -1,10 +1,10 @@
-# dune exec bin/main.exe
+# dune build
 # OCAMLPARAM: unset
-# Workspace root: /home/abdi0405/csci2041/Lab1/halloween
-$ /usr/bin/nproc > /tmp/dune5ff0a6.output 2> /dev/null
+# Workspace root: /home/abdi0405/csci2041/Lab1/final_Ocaml
+$ /usr/bin/nproc > /tmp/dunef73792.output 2> /dev/null
 # Auto-detected concurrency: 16
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune80c3a5.output
+$ /usr/bin/ocamlc.opt -config > /tmp/dune7654c3.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -23,18 +23,18 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune80c3a5.output
 #  ; env =
 #      map
 #        { "CAML_LD_LIBRARY_PATH" :
-#            "/home/abdi0405/csci2041/Lab1/halloween/_build/install/default/lib/stublibs"
+#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/install/default/lib/stublibs"
 #        ; "DUNE_OCAML_HARDCODED" : "/usr/lib/ocaml"
 #        ; "DUNE_OCAML_STDLIB" : "/usr/lib/ocaml"
-#        ; "DUNE_SOURCEROOT" : "/home/abdi0405/csci2041/Lab1/halloween"
+#        ; "DUNE_SOURCEROOT" : "/home/abdi0405/csci2041/Lab1/final_Ocaml"
 #        ; "INSIDE_DUNE" :
-#            "/home/abdi0405/csci2041/Lab1/halloween/_build/default"
+#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/home/abdi0405/csci2041/Lab1/halloween/_build/install/default/lib"
+#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/home/abdi0405/csci2041/Lab1/halloween/_build/install/default/lib"
+#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/home/abdi0405/csci2041/Lab1/halloween/_build/install/default/lib/toplevel"
+#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
@@ -153,4 +153,3 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune80c3a5.output
 #      ; windows_unicode = false
 #      }
 #  }
-# Workspace root: /home/abdi0405/csci2041/Lab1/halloween

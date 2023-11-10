@@ -1,4 +1,4 @@
 (executable
- (public_name halloween)
+ (public_name FINAL_OCAML)
  (name main)
  (libraries halloween))

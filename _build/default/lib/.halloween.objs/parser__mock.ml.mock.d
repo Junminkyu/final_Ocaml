@@ -1,1 +1,1 @@
-lib/parser__mock.ml.mock: Lexing
+lib/parser__mock.ml.mock: Ast Lexing
