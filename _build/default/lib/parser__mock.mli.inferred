@@ -1,0 +1,5 @@
+type token = WORD of string | EOF
+val menhir_begin_marker : int
+val xv_main : string list
+val xv_line : string list
+val menhir_end_marker : int

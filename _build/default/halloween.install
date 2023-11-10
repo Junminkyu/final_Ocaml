@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/halloween/META"
+  "_build/install/default/lib/halloween/dune-package"
+  "_build/install/default/lib/halloween/opam"
+]
+bin: [
+  "_build/install/default/bin/halloween"
+]

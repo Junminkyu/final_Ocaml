@@ -1,0 +1,6 @@
+(** @canonical Halloween.Lexer *)
+module Lexer = Halloween__Lexer
+
+
+(** @canonical Halloween.Parser *)
+module Parser = Halloween__Parser
