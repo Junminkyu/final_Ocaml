@@ -1,5 +1,5 @@
 (library
- (name OcamlProj))
+ (name halloween))
 
 (menhir (modules parser))
 

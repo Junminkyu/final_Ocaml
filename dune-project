@@ -1,3 +1,3 @@
 (lang dune 2.9)
-(name halloween)
+(name FINAL_OCAML)
 (using menhir 2.1)
