@@ -1,4 +1,11 @@
 
+%{
+  open Ast
+%}
+%token <string> IDENT
+%token COLON
+%token LPAREN
+%token RPAREN
 
 %token <string> WORD
 %token EOF
