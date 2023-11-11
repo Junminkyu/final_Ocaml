@@ -68,8 +68,8 @@ and _menhir_run8 : _menhir_env -> 'ttv_tail * _menhir_state * (Ast.expression) -
     )) = _v in
     let (_menhir_stack, _menhir_s, (e1 : (Ast.expression))) = _menhir_stack in
     let _v : (Ast.expression) = 
-# 23 "lib/parser.mly"
-                              ( Application (e1, Identifier nm) )
+# 24 "lib/parser.mly"
+      ( Application (e1, Identifier nm) )
 # 74 "lib/parser.ml"
      in
     _menhir_goto_expression _menhir_env _menhir_stack _menhir_s _v
@@ -119,8 +119,8 @@ and _menhir_goto_expression : _menhir_env -> 'ttv_tail -> _menhir_state -> (Ast.
             let _menhir_stack = Obj.magic _menhir_stack in
             let ((_menhir_stack, _menhir_s, (e1 : (Ast.expression))), _, (e2 : (Ast.expression))) = _menhir_stack in
             let _v : (Ast.expression) = 
-# 25 "lib/parser.mly"
-                ( Application (e1, e2) )
+# 26 "lib/parser.mly"
+      ( Application (e1, e2) )
 # 125 "lib/parser.ml"
              in
             _menhir_goto_expression _menhir_env _menhir_stack _menhir_s _v

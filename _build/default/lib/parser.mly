@@ -20,9 +20,10 @@ main:
 expression:
 | LPAREN ; e = expression ; RPAREN { e }
 | nm = IDENT { Identifier nm }
-| e1 = expression; nm = IDENT { Application (e1, Identifier nm) }
+| e1 = expression; nm = IDENT 
+      { Application (e1, Identifier nm) }
 | e1 = expression; LPAREN; e2 = expression; RPAREN
-                { Application (e1, e2) }
+      { Application (e1, e2) }
 
 
 (*IDENT WORKS LIKE THIS, IDENT works in the lexer and captures
