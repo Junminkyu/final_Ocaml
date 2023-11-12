@@ -182,12 +182,12 @@ let
 
   | 6 ->
 # 15 "lib/lexer.mll"
-       ( LPAREN)
+     (LPAREN)
 # 187 "lib/lexer.ml"
 
   | 7 ->
 # 16 "lib/lexer.mll"
-       ( RPAREN)
+     (RPAREN)
 # 192 "lib/lexer.ml"
 
   | 8 ->

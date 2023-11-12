@@ -12,8 +12,8 @@ rule token = parse
  |"(*prove*)" as word{IDENT(word)}
  |"(*hint: axiom *)" as word{IDENT(word)}
  |"(*" {comment lexbuf} 
- | '(' { LPAREN}
- | ')' { RPAREN}
+ |"("{LPAREN}
+ |")"{RPAREN}
  | _ { raise (SyntaxError ("Unexpected char: " ^ Lexing.lexeme lexbuf)) }
  | eof { EOF }
  and comment = parse
