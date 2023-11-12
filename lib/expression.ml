@@ -9,8 +9,10 @@ let rec string_of_expression ( e : expression )
   | Application (e1,e2) ->  
     (string_of_expression e1) ^
     " " ^ (string_of_expression_with_parens e2) 
+  | TypedExpression (id, ty) ->  "(" ^ id ^ " : " ^ ty ^ ")"
 and string_of_expression_with_parens e
   = match e with 
   | Identifier nm -> nm
   | Application _ ->  "(" ^ string_of_expression e ^ ")"
+  | TypedExpression (id, ty) ->  "(" ^ id ^ " : " ^ ty ^ ")"
   

@@ -2,6 +2,7 @@
 (* The type of tokens. *)
 
 type token = 
+  | TYPE of (string)
   | RPAREN
   | LPAREN
   | IDENT of (string)
