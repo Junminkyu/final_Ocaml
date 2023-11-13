@@ -7,7 +7,8 @@
 %token COLON
 %token LPAREN
 %token RPAREN
-
+%token <string>AXIOM
+%token <string>PROVE
 
 %token EOF
 %start main
@@ -19,7 +20,13 @@ main:
 
 expression:
 | LPAREN ; e = expression ; RPAREN { e }
+| nm = AXIOM {Axiom nm}
+| nm = PROVE {Prove nm}
 | nm = IDENT { Identifier nm }
+| e1=expression; nm=AXIOM
+      {Application(e1, Axiom nm)}
+| e1=expression; nm=PROVE
+      {Application(e1, Prove nm)}
 | e1 = expression; nm = IDENT 
       { Application (e1, Identifier nm) }
 | e1 = expression; LPAREN; e2 = expression; RPAREN
