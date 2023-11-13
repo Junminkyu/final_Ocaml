@@ -27,7 +27,7 @@ expression:
       {Application(e1, Axiom nm)}
 | e1=expression; nm=PROVE
       {Application(e1, Prove nm)}
-| e1 = expression; nm = IDENT 
+| e1 = expression; nm =IDENT
       { Application (e1, Identifier nm) }
 | e1 = expression; LPAREN; e2 = expression; RPAREN
       { Application (e1, e2) }

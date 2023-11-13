@@ -18,6 +18,7 @@ rule token = parse
  | eof { EOF }
  and comment = parse
  |"*)" {token lexbuf}
+ | [' ' '\t'] { comment lexbuf }
  | _ {comment lexbuf}
  |newline { Lexing.new_line lexbuf; comment lexbuf }
  |eof { raise (SyntaxError "Unclosed comment") }
