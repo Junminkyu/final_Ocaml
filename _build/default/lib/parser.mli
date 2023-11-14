@@ -2,13 +2,19 @@
 (* The type of tokens. *)
 
 type token = 
+  | TYPE
   | RPAREN
-  | PROVE of (string)
+  | PROVE
+  | NEXT
   | LPAREN
+  | LIST
+  | LET
+  | INT
   | IDENT of (string)
+  | EQUAL
   | EOF
   | COLON
-  | AXIOM of (string)
+  | AXIOM
 
 (* This exception is raised by the monolithic API functions. *)
 
