@@ -12,19 +12,21 @@ rule token = parse
  |"let" {LET}
  |"int" {INT}
  |"list"{LIST}
- |"(*prove*)" {PROVE}
- |"(*hint: axiom *)" {AXIOM}
- |"(*" {comment lexbuf} 
+ |"prove" {PROVE}
  |'=' {EQUAL}
- |':' {COLON}
  |"("{LPAREN}
  |")"{RPAREN}
+ |"hint" {HINT}
+ |"axiom" {AXIOM}
+ |"(*" {comment 0 lexbuf} 
+ |"*)" {ENDCOMMENT}
+ |':' {COLON}
  | _ { raise (SyntaxError ("Unexpected char: " ^ Lexing.lexeme lexbuf)) }
  | eof { EOF }
  
- and comment = parse
- |"*)" {token lexbuf}
- | [' ' '\t'] { comment lexbuf }
- | _ {comment lexbuf}
- |newline { Lexing.new_line lexbuf; comment lexbuf }
- |eof { raise (SyntaxError "Unclosed comment") }
+ and comment level = parse
+| "*)" { if level = 0 then token lexbuf
+else comment (level - 1) lexbuf }
+| "(*" { comment (level + 1) lexbuf }
+| newline { Lexing.new_line lexbuf; comment level lexbuf }
+| _ { comment level lexbuf }

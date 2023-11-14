@@ -4,6 +4,7 @@
 type token = 
   | TYPE
   | RPAREN
+  | REC
   | PROVE
   | NEXT
   | LPAREN

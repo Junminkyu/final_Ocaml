@@ -1,6 +1,7 @@
 type token =
     TYPE
   | RPAREN
+  | REC
   | PROVE
   | NEXT
   | LPAREN
@@ -13,6 +14,7 @@ type token =
   | COLON
   | AXIOM
 val menhir_begin_marker : int
+val xv_typeofparameter : Ast.typeOfParameter
 val xv_main : Ast.expression list
 val xv_expression : Ast.expression
 val menhir_end_marker : int
