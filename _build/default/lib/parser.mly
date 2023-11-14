@@ -4,26 +4,53 @@
 %}
 
 %token <string> IDENT
+%token LET
+%token NEXT
 %token COLON
 %token LPAREN
 %token RPAREN
+%token SEP
+%token AXIOM
+%token PROVE
 
-
+%token EQUAL
 %token EOF
+%token LIST
+%token INT
 %start main
 %type <expression list> main
 %%
 
 main:
-| e = expression ; EOF { [e] }
-
+| e=expression ; EOF { [e] }
+// d=list(statement)
+// statement:
+// | TYPE: s = typedef; {s}
+// | LET ; REC; letrec
+// | LET ; PROVE ; letprove
 expression:
 | LPAREN ; e = expression ; RPAREN { e }
 | nm = IDENT { Identifier nm }
-| e1 = expression; nm = IDENT 
+| e1= expression; AXIOM //e1 (*hint: axiom*) situation
+      {Application(e1, Axiom "(*hint: axiom*)")}
+| e1=expression; PROVE  // e1 (*prove*) situation
+      {Application(e1, Prove "(*prove*)")}
+| e1=expression; nm =IDENT
       { Application (e1, Identifier nm) }
-| e1 = expression; LPAREN; e2 = expression; RPAREN
+
+| e1=expression; SEP; e2=expression;
+      { SEP (e1, e2) }
+
+
+| e1 = expression; LPAREN; e2 = expression; RPAREN // e1 (e2) situation
       { Application (e1, e2) }
+| e1=expression;COLON; tp=expression; // e1 : e2 situation. for example (h:int)
+      { TypeChecker(e1,tp)}
+| e1=expression;EQUAL;e2=expression // e1 = e2 situation
+      {Equal(e1,e2)}
+|INT {Int "int"}
+|LIST{List "list"}
+
 
 
 (*IDENT WORKS LIKE THIS, IDENT works in the lexer and captures

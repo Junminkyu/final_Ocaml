@@ -1,1 +1,5 @@
-cf (cf h) 
+(* A type declaration for lists of integers.
+You need to know about these for induction proofs, to know the cases. *)
+type list = (* To simplify parsing, each variant starts with | *)
+| Nil
+| Cons of (int * list)
