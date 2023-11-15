@@ -1,10 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
 # Workspace root: /home/abdi0405/final_Ocaml-1
-$ /usr/bin/nproc > /tmp/dune67b7b8.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dune7bc918.output 2> /dev/null
 # Auto-detected concurrency: 16
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune5592ff.output
+$ /usr/bin/ocamlc.opt -config > /tmp/dunefed6ad.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -153,22 +153,37 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune5592ff.output
 #      }
 #  }
 $ (cd _build/default && /usr/bin/menhir expression/lib/parser.mly --base expression/lib/parser --infer-write-query expression/lib/parser__mock.ml.mock)
-> File "expression/lib/parser.mly", line 19, characters 7-12:
-> Warning: the token ARROW is unused.
-> File "expression/lib/parser.mly", line 15, characters 7-12:
-> Warning: the token COMMA is unused.
 > File "expression/lib/parser.mly", line 18, characters 7-12:
+> Warning: the token ARROW is unused.
+> File "expression/lib/parser.mly", line 14, characters 7-12:
+> Warning: the token COMMA is unused.
+> File "expression/lib/parser.mly", line 17, characters 7-12:
 > Warning: the token MATCH is unused.
-> File "expression/lib/parser.mly", line 20, characters 7-11:
+> File "expression/lib/parser.mly", line 23, characters 6-10:
+> Warning: the token PLUS is unused.
+> File "expression/lib/parser.mly", line 24, characters 6-11:
+> Warning: the token TIMES is unused.
+> File "expression/lib/parser.mly", line 19, characters 7-11:
 > Warning: the token WITH is unused.
 $ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl expression/lib/parser__mock.ml.mock) > _build/default/expression/lib/.expression.objs/parser__mock.ml.mock.d
 $ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I expression/lib/.expression.objs/byte -open Expression__ -short-paths -i -impl expression/lib/parser__mock.ml.mock) > _build/default/expression/lib/parser__mock.mli.inferred
-> File "expression/lib/parser__mock.ml.mock", lines 98-102, characters 5-16:
->  98 | .....(
->  99 | # 26 "expression/lib/parser.mly"
-> 100 |                              ( _1 )
-> 101 | # 102 "expression/lib/parser__mock.ml.mock"
-> 102 |      : 'tv_main)....
-> Error: This expression has type 'tv_decision_level list
->        but an expression was expected of type decision_level
-[2]
+$ (cd _build/default && /usr/bin/menhir expression/lib/parser.mly --base expression/lib/parser --infer-read-reply expression/lib/parser__mock.mli.inferred)
+> File "expression/lib/parser.mly", line 22, characters 0-5:
+> Warning: the precedence level assigned to EQUAL is never useful.
+> File "expression/lib/parser.mly", line 23, characters 0-5:
+> Warning: the precedence level assigned to PLUS is never useful.
+> File "expression/lib/parser.mly", line 24, characters 0-5:
+> Warning: the precedence level assigned to TIMES is never useful.
+> Warning: 2 states have shift/reduce conflicts.
+> Warning: 4 shift/reduce conflicts were arbitrarily resolved.
+$ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl expression/lib/parser.ml) > _build/default/expression/lib/.expression.objs/parser.ml.d
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I expression/lib/.expression.objs/byte -no-alias-deps -opaque -open Expression__ -o expression/lib/.expression.objs/byte/expression.cmo -c -impl expression/lib/expression.ml)
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I expression/lib/.expression.objs/byte -intf-suffix .ml -no-alias-deps -opaque -open Expression__ -o expression/lib/.expression.objs/byte/expression__Parser.cmo -c -impl expression/lib/parser.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I expression/lib/.expression.objs/byte -I expression/lib/.expression.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Expression__ -o expression/lib/.expression.objs/native/expression__Parser.cmx -c -impl expression/lib/parser.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I expression/lib/.expression.objs/byte -I expression/lib/.expression.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Expression__ -o expression/lib/.expression.objs/native/expression.cmx -c -impl expression/lib/expression.ml)
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o expression/lib/expression.cma expression/lib/.expression.objs/byte/expression__.cmo expression/lib/.expression.objs/byte/expression__Ast.cmo expression/lib/.expression.objs/byte/expression__Parser.cmo expression/lib/.expression.objs/byte/expression__Lexer.cmo expression/lib/.expression.objs/byte/expression.cmo)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o expression/lib/expression.cmxa expression/lib/.expression.objs/native/expression__.cmx expression/lib/.expression.objs/native/expression__Ast.cmx expression/lib/.expression.objs/native/expression__Parser.cmx expression/lib/.expression.objs/native/expression__Lexer.cmx expression/lib/.expression.objs/native/expression.cmx)
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I expression/bin/.main.eobjs/byte -I expression/lib/.expression.objs/byte -no-alias-deps -opaque -o expression/bin/.main.eobjs/byte/dune__exe__Main.cmo -c -impl expression/bin/main.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -shared -linkall -I expression/lib -o expression/lib/expression.cmxs expression/lib/expression.cmxa)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I expression/bin/.main.eobjs/byte -I expression/bin/.main.eobjs/native -I expression/lib/.expression.objs/byte -I expression/lib/.expression.objs/native -intf-suffix .ml -no-alias-deps -opaque -o expression/bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl expression/bin/main.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o expression/bin/main.exe expression/lib/expression.cmxa expression/bin/.main.eobjs/native/dune__exe__Main.cmx)

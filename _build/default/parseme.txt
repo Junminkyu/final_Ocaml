@@ -1,0 +1,1 @@
+cf (cf x) = cf x

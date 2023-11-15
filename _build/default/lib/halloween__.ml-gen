@@ -1,0 +1,14 @@
+(** @canonical Halloween.Ast *)
+module Ast = Halloween__Ast
+
+
+(** @canonical Halloween.Expression *)
+module Expression = Halloween__Expression
+
+
+(** @canonical Halloween.Lexer *)
+module Lexer = Halloween__Lexer
+
+
+(** @canonical Halloween.Parser *)
+module Parser = Halloween__Parser

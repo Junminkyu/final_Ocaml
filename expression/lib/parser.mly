@@ -5,21 +5,25 @@
 
 %token <string> IDENT
 %token COLON
+%token EQUAL
 %token LPAREN
 %token RPAREN
 %token PROVE
 %token LET
-%token EQUAL
-%token EOF
-%token HINT 
+%token HINT
 %token COMMA
 %token ENDCOMMENT
 %token AXIOM
 %token MATCH
 %token ARROW
 %token WITH
+%token EOF
+
+%left EQUAL
+
+
 %start main
-%type <decision_level> main
+%type <decision_level list> main
 %%
 
 main:
@@ -30,7 +34,7 @@ decision_level:
 | expression {DecisionLevExpression $1 }
 
 declaration:
-|LET; PROVE; function_name=IDENT; arg=list(input);EQUAL;eq=equality;hint=option(hint) 
+|LET; PROVE; function_name=IDENT; arg=list(input);EQUAL;eq=equality; hint=option(hint) 
       {ProofDeclaration(function_name,arg,eq,hint)}
 
  

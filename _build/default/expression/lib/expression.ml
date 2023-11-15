@@ -9,32 +9,33 @@ module Lexer = Lexer
 
 
 
-  let rec string_of_expression ( e : expression ) 
-  = match e with
-  | Identifier nm -> nm
-  | Application (e1,e2) -> "("^(string_of_expression e1)^" "^
-    (string_of_expression e2)^")"
+   let string_of_typedVar (tv : typedVar) =
+    match tv with
+    | TypeVariable (name, type_) -> "(" ^ name ^ " : " ^ type_ ^ ")"
   
-  let string_of_equality (e:equality)
-  = match e with
-  |Equality(a,b)->string_of_expression(a)^" = "^string_of_expression(b)
-
-  let string_of_hint (e:hint option)
-  = match e with
-  |None->""
-  |Some Axiom ->"(*hint: axiom*)"
-
-  let rec string_typedVar (e:typedVar list)
-  = match e with
-  |[]->""
-  |TypeVariable (a,b)::tl-> "("^a^":"^b^") "^string_typedVar(tl)
+  let rec string_of_expression (e : expression) =
+    match e with
+    | Application (e1, e2) -> "(" ^ string_of_expression e1 ^ " " ^ string_of_expression e2 ^ ")"
+    | Identifier name -> name
+   
   
-  let string_of_declaration (e:declaration)
-  = match e with
-  |ProofDeclaration (e1,e2,e3,e4) -> "let (*prove*) "^e1^" "^string_typedVar(e2)^" = "^string_of_equality(e3)^"\n"^string_of_hint(e4)
-
-
-  let string_of_top_level_item (item: decision_level) =
+  let string_of_hint (h : hint option) =
+    match h with
+    | None -> ""
+    | Some Axiom -> "(* hint: axiom *)"
+  
+  let string_of_equality (eq : equality) =
+    match eq with
+    | Equality (e1, e2) -> string_of_expression e1 ^ " = " ^ string_of_expression e2
+  
+  let string_of_declaration (d : declaration) =
+    match d with
+    | ProofDeclaration (name, args, eq, hint) ->
+      "let (* prove *) " ^ name ^ " " ^
+      String.concat " " (List.map string_of_typedVar args) ^ " = " ^
+      string_of_equality eq ^ "\n" ^ string_of_hint hint
+  
+  let string_of_top_level_item (item : decision_level) =
     match item with
     | DecisionLevDeclaration d -> string_of_declaration d
     | DecisionLevExpression e -> string_of_expression e

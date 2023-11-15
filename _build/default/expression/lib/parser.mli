@@ -24,4 +24,4 @@ exception Error
 
 (* The monolithic API. *)
 
-val main: (Lexing.lexbuf -> token) -> Lexing.lexbuf -> (Ast.decision_level)
+val main: (Lexing.lexbuf -> token) -> Lexing.lexbuf -> (Ast.decision_level list)
