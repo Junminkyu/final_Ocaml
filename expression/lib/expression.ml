@@ -35,14 +35,10 @@ let string_of_constructor (e:constructor)
 |NormalType(a,b)->a^" of ("^(string_of_astrik b)^") "
 |SimpleType a ->a^" "
 
-let string_of_arrowConstructor(e:arrowConstructor)
- = match e with
-|Term nm->nm
-|Expression nm->string_of_expression nm
 
 let string_of_element (e:element)
  = match e with
-| ArrowStatement(a,b)->string_of_arrowConstructor a^" -> "^string_of_arrowConstructor b
+| ArrowStatement(a,b)->string_of_expression a^" -> "^string_of_expression b
 |Construct a ->string_of_constructor a
  
 let rec string_of_vertical (e:vert list)

@@ -14,12 +14,9 @@
  |NormalType of string * astrik
  |SimpleType of string
  
-
  type hint=
  |Axiom
  |Induction of string
-
- 
 
  type expression =
  |Application of expression * expression
@@ -28,13 +25,13 @@
  |Identifier of string
  |Express of expression * string
 
- type arrowConstructor = 
- |Term of string
- |Expression of expression
+ (* type arrowConstructor = 
+ (* |Term of string *)
+ |Expression of expression *)
 
  type element=
  |Construct of constructor
- |ArrowStatement of arrowConstructor * arrowConstructor
+ |ArrowStatement of expression * expression
  
  type vert=
  |Vertical of element 

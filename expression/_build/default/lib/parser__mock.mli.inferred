@@ -36,5 +36,4 @@ val xv_element : Ast.element
 val xv_declaration : Ast.declaration
 val xv_constructor : Ast.constructor
 val xv_astrik : Ast.astrik
-val xv_arrowConstructor : Ast.arrowConstructor
 val menhir_end_marker : int

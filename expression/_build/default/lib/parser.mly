@@ -55,13 +55,13 @@ constructor: //this part is for type declaration part
 |nm=IDENT {SimpleType(nm)} // example: Nil
 
 
-arrowConstructor: 
-|nm=IDENT {Term(nm)} 
-|e1=expression {Expression(e1)}
+// arrowConstructor: 
+// |nm=IDENT {Term(nm)} 
+// |e1=expression {Expression(e1)}
 
 element:
 |nm=constructor{Construct(nm)} // in case of Nil or Cons of (a * b)
-|e1=arrowConstructor;ARROW;e2=arrowConstructor {ArrowStatement(e1,e2)} //in case of a -> b
+|e1=expression;ARROW;e2=expression {ArrowStatement(e1,e2)} //in case of a -> b
 
 vert:
 |VERT;e1=element {Vertical(e1)} // in case of | b | a | c
