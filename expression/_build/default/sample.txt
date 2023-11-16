@@ -6,7 +6,7 @@ selection:
 - the only hint is 'axiom' (no 'induction')
 *)
 let (*prove*) cf_idempotent (h : int)
-= (cf (cf h) = cf h)
+= (cf (cf h) = cf h) 
 (*hint: axiom *)
 
 let (*prove*) inv_involution (h : int)

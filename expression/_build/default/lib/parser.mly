@@ -15,6 +15,7 @@
 %token COMMA
 %token ENDCOMMENT
 %token AXIOM
+%token INDUCTION
 %token MATCH
 %token ARROW
 %token WITH
@@ -32,38 +33,40 @@ main:
 
 declaration:
 |LET; PROVE; function_name=IDENT; arg=list(input);EQUAL;eq=equality;hint=option(hint) 
-      {ProofDeclaration(function_name,arg,eq,hint)}
-|TYPE;type_name=IDENT;EQUAL;vertical=vert
-      {TypeDeclaration(type_name,vertical)}
+      {ProofDeclaration(function_name,arg,eq,hint)} //this part is for "let (*prove*) function_name (h:int) = (function body) (*hint: axiom*) "
+|TYPE;type_name=IDENT;EQUAL;vertical=list(vert)
+      {TypeDeclaration(type_name,vertical)}  //this part is for "type name_of_type = (type body)"
 |LET; REC; function_name=IDENT; args=list(input);COLON;output_type=IDENT;EQUAL;m=match_statement
-      {RecDeclaration(function_name,args,output_type,m)}
+      {RecDeclaration(function_name,args,output_type,m)}  //this part is for "let rec function_name (h:int) : int = (match body) "
 
 input:
 |nm=IDENT; COLON; t=IDENT {TypeVariable(nm,t)}
 |LPAREN;arg=input;RPAREN {arg}
 
 
-astrik:
+astrik: //this part is for type declaration part
 |nm=IDENT {LastAstrik(nm)}
-|e1=astrik; ASTRIK; e2=astrik {AstrikType(e1,e2)}
+|e1=astrik; ASTRIK; e2=astrik {AstrikType(e1,e2)} //in case of (int * int * string )
 |LPAREN;astr=astrik;RPAREN {astr}
 
-constructor:
-|e1=IDENT; OF ; t=astrik {NormalType(e1,t)}
-|nm=IDENT {SimpleType(nm)}
+constructor: //this part is for type declaration part
+|e1=IDENT; OF ; t=astrik {NormalType(e1,t)} // example : Cons "of" ()
+|nm=IDENT {SimpleType(nm)} // example: Nil
 
 
-arrowConstructor:
+arrowConstructor: //not finished yet, this is for let rec declaration part
 |nm=IDENT {Term(nm)}
-// |e1= arrowConstructor * e2=input {TypeofArgument(e1,e2)}
+|e1=expression {Expression(e1)}
+
+element:
+|nm=constructor{Construct(nm)} // in case of Nil | Cons of (a * b)
+|e1=arrowConstructor;ARROW;e2=arrowConstructor {ArrowStatement(e1,e2)} 
 
 vert:
-|nm=constructor{Construct(nm)}
-|e1=arrowConstructor;ARROW;e2=arrowConstructor {ArrowStatement(e1,e2)}
-|e1=vert;VERT;e2=vert {Vertical(e1,e2)}
+|VERT;e1=element {Vertical(e1)} // in case of a | b
 
 match_statement:
-|MATCH;nm=IDENT;WITH;e1=vert {Matching(nm,e1)}
+|MATCH;nm=IDENT;WITH;e1=list(vert) {Matching(nm,e1)} //taking care of "match string_name with" part
 
 
 equality:
@@ -72,12 +75,16 @@ equality:
 
 hint:
 |HINT;AXIOM;ENDCOMMENT {Axiom}
+|HINT;INDUCTION;nm=IDENT;ENDCOMMENT {Induction nm}
 
 expression:
 |LPAREN;e=expression;RPAREN{e}
 |nm=IDENT{Identifier nm}
-|e1=expression;nm=IDENT{Application(e1,Identifier nm)}
+|e1=expression;COLON;e2=expression {Colon(e1,e2)}
+|e1=expression;COMMA;e2=expression {Comma(e1,e2)}
+|e1=expression;nm=IDENT{Express(e1,nm)}
 |e1=expression;LPAREN;e2=expression;RPAREN{Application(e1,e2)}
+
 
 
 

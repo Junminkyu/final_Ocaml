@@ -9,6 +9,7 @@ type token =
   | MATCH
   | LPAREN
   | LET
+  | INDUCTION
   | IDENT of string
   | HINT
   | EQUAL
@@ -24,12 +25,14 @@ val xv_vert : Ast.vert
 val xv_option_hint_ : Ast.hint option
 val xv_match_statement : Ast.match_statement
 val xv_main : Ast.declaration list
+val xv_list_vert_ : Ast.vert list
 val xv_list_input_ : Ast.typedVar list
 val xv_list_declaration_ : Ast.declaration list
 val xv_input : Ast.typedVar
 val xv_hint : Ast.hint
 val xv_expression : Ast.expression
 val xv_equality : Ast.equality
+val xv_element : Ast.element
 val xv_declaration : Ast.declaration
 val xv_constructor : Ast.constructor
 val xv_astrik : Ast.astrik

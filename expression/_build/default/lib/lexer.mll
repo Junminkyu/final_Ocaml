@@ -22,6 +22,7 @@ rule token = parse
  |"rec"{REC}
  |"," {COMMA}
  |"(*hint:" {HINT}
+ |"induction"{INDUCTION}
  |"axiom" {AXIOM}
  |"with" {WITH}
  |"(*" {comment 0 lexbuf} 

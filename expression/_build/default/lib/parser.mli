@@ -12,6 +12,7 @@ type token =
   | MATCH
   | LPAREN
   | LET
+  | INDUCTION
   | IDENT of (string)
   | HINT
   | EQUAL
