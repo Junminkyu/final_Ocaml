@@ -1,7 +1,10 @@
 type token =
     WITH
+  | VERT
+  | TYPE
   | RPAREN
   | PROVE
+  | OF
   | MATCH
   | LPAREN
   | LET
@@ -13,8 +16,10 @@ type token =
   | COMMA
   | COLON
   | AXIOM
+  | ASTRIK
   | ARROW
 val menhir_begin_marker : int
+val xv_vert : Ast.vert
 val xv_option_hint_ : Ast.hint option
 val xv_main : Ast.declaration list
 val xv_list_input_ : Ast.typedVar list
@@ -24,4 +29,6 @@ val xv_hint : Ast.hint
 val xv_expression : Ast.expression
 val xv_equality : Ast.equality
 val xv_declaration : Ast.declaration
+val xv_constructor : Ast.constructor
+val xv_astrik : Ast.astrik
 val menhir_end_marker : int

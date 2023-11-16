@@ -13,7 +13,11 @@ rule token = parse
  |'=' {EQUAL}
  |"("{LPAREN}
  |")"{RPAREN}
+ |"|"{VERT}
  |"->"{ARROW}
+ |"*"{ASTRIK}
+ |"type" {TYPE}
+ |"of" {OF}
  |"match "{MATCH}
  |"(*hint:" {HINT}
  |"axiom" {AXIOM}

@@ -18,6 +18,10 @@
 %token MATCH
 %token ARROW
 %token WITH
+%token VERT
+%token ASTRIK
+%token TYPE
+%token OF
 %start main
 %type <declaration list> main
 %%
@@ -28,11 +32,25 @@ main:
 declaration:
 |LET; PROVE; function_name=IDENT; arg=list(input);EQUAL;eq=equality;hint=option(hint) 
       {ProofDeclaration(function_name,arg,eq,hint)}
+|TYPE;type_name=IDENT;EQUAL;vertical=vert
+      {TypeDeclaration(type_name,vertical)}
 
- 
 input:
 |nm=IDENT; COLON; t=IDENT {TypeVariable(nm,t)}
 |LPAREN;arg=input;RPAREN {arg}
+
+astrik:
+|nm=IDENT {LastAstrik(nm)}
+|e1=astrik; ASTRIK; e2=astrik {AstrikType(e1,e2)}
+|LPAREN;astr=astrik;RPAREN {astr}
+
+constructor:
+|e1=IDENT; OF ; t=astrik {NormalType(e1,t)}
+|nm=IDENT {SimpleType(nm)}
+
+vert:
+|nm=constructor{Construct(nm)}
+|e1=vert;VERT;e2=vert {Vertical(e1,e2)}
 
 
 equality:

@@ -3,20 +3,40 @@
  | LetRec of expression * expression *)
  type identifier = string
 
- type typedVar = TypeVariable of (string * string)
- 
+ type typedVar = 
+ |TypeVariable of (string * string)
+
  type expression =
  |Application of expression * expression
  |Identifier of string
+
+ type astrik = 
+ |AstrikType of astrik * astrik
+ |LastAstrik of string
  
+ type constructor = 
+ |NormalType of string * astrik
+ |SimpleType of string
+ 
+ type vert=
+ |Vertical of vert * vert
+ |Construct of constructor
+
+
  type hint=
  |Axiom
  (* |Induction of string
  |Direct *)
  
- type equality = Equality of (expression * expression)
- 
- type declaration = ProofDeclaration of (string * typedVar list * equality * hint option)
+ type equality = 
+ |Equality of (expression * expression)
+
+
+ type declaration = 
+ |ProofDeclaration of (string * typedVar list * equality * hint option)
+ |TypeDeclaration of (string * vert)
+
+
  
  
  

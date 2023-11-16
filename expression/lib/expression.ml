@@ -14,19 +14,40 @@ module Lexer = Lexer
   = match e with
   |Equality(a,b)->string_of_expression(a)^" = "^string_of_expression(b)
 
+
   let string_of_hint (e:hint option)
   = match e with
   |None->""
   |Some Axiom ->"(*hint: axiom*)"
 
-  let rec string_typedVar (e:typedVar list)
+  let rec string_of_astrik (e:astrik)
+  = match e with
+  |AstrikType (a,b)->string_of_astrik a^ " * "^string_of_astrik b
+  |LastAstrik a->a
+
+
+ let string_of_constructor (e:constructor)
+ = match e with
+ |NormalType(a,b)->a^" of ("^(string_of_astrik b)^") "
+ |SimpleType a ->a^" "
+
+
+ let rec string_of_vertical (e:vert)
+ = match e with 
+  |Vertical(a, b)->string_of_vertical a^"| "^string_of_vertical b
+  |Construct a ->string_of_constructor a
+  
+  let rec string_of_typedVar (e:typedVar list)
   = match e with
   |[]->""
-  |TypeVariable (a,b)::tl-> "("^a^":"^b^") "^string_typedVar(tl)
+  |TypeVariable (a,b)::tl-> "("^a^":"^b^") "^string_of_typedVar(tl)
+
   
   let string_of_declaration (e:declaration)
   = match e with
-  |ProofDeclaration (e1,e2,e3,e4) -> "let (*prove*) "^e1^" "^string_typedVar(e2)^" = "^string_of_equality(e3)^"\n"^string_of_hint(e4)
+  |ProofDeclaration (e1,e2,e3,e4) -> "let (*prove*) "^e1^" "^string_of_typedVar(e2)^" = "^string_of_equality(e3)^"\n"^string_of_hint(e4)
+  |TypeDeclaration(e1,e2)->"type "^e1^" = "^string_of_vertical(e2)
+
 
 
 (* and string_of_expression_with_parens e

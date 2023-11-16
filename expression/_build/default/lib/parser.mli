@@ -3,8 +3,11 @@
 
 type token = 
   | WITH
+  | VERT
+  | TYPE
   | RPAREN
   | PROVE
+  | OF
   | MATCH
   | LPAREN
   | LET
@@ -16,6 +19,7 @@ type token =
   | COMMA
   | COLON
   | AXIOM
+  | ASTRIK
   | ARROW
 
 (* This exception is raised by the monolithic API functions. *)
