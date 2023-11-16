@@ -39,6 +39,7 @@ declaration:
 |LET; REC; function_name=IDENT; args=list(input);COLON;output_type=IDENT;EQUAL;m=match_statement
       {RecDeclaration(function_name,args,output_type,m)}  //this part is for "let rec function_name (h:int) : int = (match body) "
 
+
 input:
 |nm=IDENT; COLON; t=IDENT {TypeVariable(nm,t)}
 |LPAREN;arg=input;RPAREN {arg}
@@ -54,16 +55,16 @@ constructor: //this part is for type declaration part
 |nm=IDENT {SimpleType(nm)} // example: Nil
 
 
-arrowConstructor: //not finished yet, this is for let rec declaration part
-|nm=IDENT {Term(nm)}
+arrowConstructor: 
+|nm=IDENT {Term(nm)} 
 |e1=expression {Expression(e1)}
 
 element:
-|nm=constructor{Construct(nm)} // in case of Nil | Cons of (a * b)
-|e1=arrowConstructor;ARROW;e2=arrowConstructor {ArrowStatement(e1,e2)} 
+|nm=constructor{Construct(nm)} // in case of Nil or Cons of (a * b)
+|e1=arrowConstructor;ARROW;e2=arrowConstructor {ArrowStatement(e1,e2)} //in case of a -> b
 
 vert:
-|VERT;e1=element {Vertical(e1)} // in case of a | b
+|VERT;e1=element {Vertical(e1)} // in case of | b | a | c
 
 match_statement:
 |MATCH;nm=IDENT;WITH;e1=list(vert) {Matching(nm,e1)} //taking care of "match string_name with" part
@@ -74,16 +75,16 @@ equality:
 |lhs=expression;EQUAL;rhs=expression {Equality(lhs,rhs)}
 
 hint:
-|HINT;AXIOM;ENDCOMMENT {Axiom}
-|HINT;INDUCTION;nm=IDENT;ENDCOMMENT {Induction nm}
+|HINT;AXIOM;ENDCOMMENT {Axiom} //(*hint: axiom*) part
+|HINT;INDUCTION;nm=IDENT;ENDCOMMENT {Induction nm} //(*hint: induction x*) part
 
 expression:
 |LPAREN;e=expression;RPAREN{e}
 |nm=IDENT{Identifier nm}
-|e1=expression;COLON;e2=expression {Colon(e1,e2)}
-|e1=expression;COMMA;e2=expression {Comma(e1,e2)}
-|e1=expression;nm=IDENT{Express(e1,nm)}
-|e1=expression;LPAREN;e2=expression;RPAREN{Application(e1,e2)}
+|e1=expression;COLON;e2=expression {Colon(e1,e2)} //in case of a:b 
+|e1=expression;COMMA;e2=expression {Comma(e1,e2)} //in case of a,b
+|e1=expression;nm=IDENT{Express(e1,nm)} //when something like cf x happens
+|e1=expression;LPAREN;e2=expression;RPAREN{Application(e1,e2)} //when something like cf (x) happens
 
 
 
