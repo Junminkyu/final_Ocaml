@@ -1,3 +1,5 @@
+let (*prove*) append_nilnil = (append (Nil) (Nil) = Nil)
+
 type list = Nil | Cons of (int*list)
 
 let rec yo (h:int):int = 

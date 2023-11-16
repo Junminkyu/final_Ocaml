@@ -57,8 +57,8 @@ arrowConstructor: //not finished yet, this is for let rec declaration part
 |nm=IDENT {Term(nm)}
 
 vert: 
-|nm=constructor{Construct(nm)}
-|e1=arrowConstructor;ARROW;e2=arrowConstructor {ArrowStatement(e1,e2)} // in case of a->b
+|nm=constructor{Construct(nm)} // in case of Nil | Cons of (a * b)
+|e1=arrowConstructor;ARROW;e2=arrowConstructor {ArrowStatement(e1,e2)} // in case of a->b | c -> d
 |e1=vert;VERT;e2=vert {Vertical(e1,e2)} // in case of a | b
 
 match_statement:
