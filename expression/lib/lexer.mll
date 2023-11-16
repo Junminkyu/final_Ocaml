@@ -19,6 +19,8 @@ rule token = parse
  |"type" {TYPE}
  |"of" {OF}
  |"match "{MATCH}
+ |"rec"{REC}
+ |"," {COMMA}
  |"(*hint:" {HINT}
  |"axiom" {AXIOM}
  |"with" {WITH}

@@ -1,1 +1,5 @@
-type list = Nil | Cons | Yo
+type list = Nil | Cons of (int*list)
+
+let rec yo (h:int):int = 
+match li with
+Nil -> Nil | Cons -> Cons

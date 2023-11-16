@@ -17,10 +17,15 @@
  type constructor = 
  |NormalType of string * astrik
  |SimpleType of string
+
+ type arrowConstructor = 
+ |Term of string
+
  
  type vert=
  |Vertical of vert * vert
  |Construct of constructor
+ |ArrowStatement of arrowConstructor * arrowConstructor
 
 
  type hint=
@@ -31,10 +36,13 @@
  type equality = 
  |Equality of (expression * expression)
 
+ type match_statement=
+ |Matching of (string * vert)
 
  type declaration = 
  |ProofDeclaration of (string * typedVar list * equality * hint option)
  |TypeDeclaration of (string * vert)
+ |RecDeclaration of (string* typedVar list * string * match_statement)
 
 
  

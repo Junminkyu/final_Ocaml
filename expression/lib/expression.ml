@@ -31,10 +31,14 @@ module Lexer = Lexer
  |NormalType(a,b)->a^" of ("^(string_of_astrik b)^") "
  |SimpleType a ->a^" "
 
+ let string_of_arrowConstructor(e:arrowConstructor)
+ = match e with
+ |Term nm->nm
 
  let rec string_of_vertical (e:vert)
  = match e with 
   |Vertical(a, b)->string_of_vertical a^"| "^string_of_vertical b
+  |ArrowStatement(a,b)->string_of_arrowConstructor a^" -> "^string_of_arrowConstructor b
   |Construct a ->string_of_constructor a
   
   let rec string_of_typedVar (e:typedVar list)
@@ -42,11 +46,15 @@ module Lexer = Lexer
   |[]->""
   |TypeVariable (a,b)::tl-> "("^a^":"^b^") "^string_of_typedVar(tl)
 
+  let string_of_match_statement (e:match_statement)
+  = match e with
+  |Matching (a,b) ->"match "^a^" with \n"^string_of_vertical b
   
   let string_of_declaration (e:declaration)
   = match e with
   |ProofDeclaration (e1,e2,e3,e4) -> "let (*prove*) "^e1^" "^string_of_typedVar(e2)^" = "^string_of_equality(e3)^"\n"^string_of_hint(e4)
   |TypeDeclaration(e1,e2)->"type "^e1^" = "^string_of_vertical(e2)
+  |RecDeclaration(e1,e2,e3,e4)->"let rec "^e1^" "^string_of_typedVar(e2)^": "^e3^" = "^string_of_match_statement(e4)
 
 
 

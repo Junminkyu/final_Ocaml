@@ -6,6 +6,7 @@ type token =
   | VERT
   | TYPE
   | RPAREN
+  | REC
   | PROVE
   | OF
   | MATCH

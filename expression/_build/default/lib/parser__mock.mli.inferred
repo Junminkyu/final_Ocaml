@@ -3,6 +3,7 @@ type token =
   | VERT
   | TYPE
   | RPAREN
+  | REC
   | PROVE
   | OF
   | MATCH
@@ -21,6 +22,7 @@ type token =
 val menhir_begin_marker : int
 val xv_vert : Ast.vert
 val xv_option_hint_ : Ast.hint option
+val xv_match_statement : Ast.match_statement
 val xv_main : Ast.declaration list
 val xv_list_input_ : Ast.typedVar list
 val xv_list_declaration_ : Ast.declaration list
@@ -31,4 +33,5 @@ val xv_equality : Ast.equality
 val xv_declaration : Ast.declaration
 val xv_constructor : Ast.constructor
 val xv_astrik : Ast.astrik
+val xv_arrowConstructor : Ast.arrowConstructor
 val menhir_end_marker : int

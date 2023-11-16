@@ -22,6 +22,7 @@
 %token ASTRIK
 %token TYPE
 %token OF
+%token REC
 %start main
 %type <declaration list> main
 %%
@@ -34,10 +35,13 @@ declaration:
       {ProofDeclaration(function_name,arg,eq,hint)}
 |TYPE;type_name=IDENT;EQUAL;vertical=vert
       {TypeDeclaration(type_name,vertical)}
+|LET; REC; function_name=IDENT; args=list(input);COLON;output_type=IDENT;EQUAL;m=match_statement
+      {RecDeclaration(function_name,args,output_type,m)}
 
 input:
 |nm=IDENT; COLON; t=IDENT {TypeVariable(nm,t)}
 |LPAREN;arg=input;RPAREN {arg}
+
 
 astrik:
 |nm=IDENT {LastAstrik(nm)}
@@ -48,9 +52,18 @@ constructor:
 |e1=IDENT; OF ; t=astrik {NormalType(e1,t)}
 |nm=IDENT {SimpleType(nm)}
 
+
+arrowConstructor:
+|nm=IDENT {Term(nm)}
+// |e1= arrowConstructor * e2=input {TypeofArgument(e1,e2)}
+
 vert:
 |nm=constructor{Construct(nm)}
+|e1=arrowConstructor;ARROW;e2=arrowConstructor {ArrowStatement(e1,e2)}
 |e1=vert;VERT;e2=vert {Vertical(e1,e2)}
+
+match_statement:
+|MATCH;nm=IDENT;WITH;e1=vert {Matching(nm,e1)}
 
 
 equality:
