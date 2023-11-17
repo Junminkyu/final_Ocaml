@@ -52,8 +52,8 @@ constructor: //this part is for type declaration part
 |e1=IDENT; OF ; t=astrik {NormalType(e1,t)} // example : Cons "of" (a*b)
 |nm=IDENT {SimpleType(nm)} // example: Nil
 
-element: //encapsulation
-|nm=constructor{Construct(nm)} 
+element: 
+|nm=constructor{Construct(nm)} // Nil      Cons of (int * string)
 |e1=expression;ARROW;e2=expression {ArrowStatement(e1,e2)} //Cons (h:int, t:int) "->" append (append Cons(h,t))
 
 vert:
