@@ -45,7 +45,7 @@ input:
 
 astrik: //this part is for type declaration part     e2=astrik   (e3 * e4) =astrik
 |nm=IDENT {LastAstrik(nm)} 
-|e1=astrik; ASTRIK; e2=astrik {AstrikType(e1,e2)} // string * (int * (int * string)) -> e1 * e2 -> e1 * (e3 * e4) -> e1 * e3 * e5 * e6 -> IDENT * IDENT * IDENT * IDENT
+|e1=astrik; ASTRIK; e2=astrik {AstrikType(e1,e2)} // string * (int * (int * string)) -> e1 * e2 -> e1 * (e3 * e4) -> e1 * (e3 * (e5 * e6)) -> IDENT * IDENT * IDENT * IDENT
 |LPAREN;astr=astrik;RPAREN {astr}
 
 constructor: //this part is for type declaration part
