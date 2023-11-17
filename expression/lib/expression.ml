@@ -17,7 +17,6 @@ let string_of_equality (e:equality)
 = match e with
 |Equality(a,b)->string_of_expression(a)^" = "^string_of_expression(b)
 
-
 let string_of_hint (e:hint option)
 = match e with
 |None->""
@@ -29,12 +28,10 @@ let rec string_of_astrik (e:astrik)
 |AstrikType (a,b)->string_of_astrik a^ " * "^string_of_astrik b
 |LastAstrik a->a
 
-
 let string_of_constructor (e:constructor)
 = match e with
 |NormalType(a,b)->a^" of ("^(string_of_astrik b)^") "
 |SimpleType a ->a^" "
-
 
 let string_of_element (e:element)
  = match e with

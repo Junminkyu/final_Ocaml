@@ -1,1 +1,2 @@
-cf (cf x)
+let (*prove*) yo (h : int)
+= foo x y = cf (((x))) 
