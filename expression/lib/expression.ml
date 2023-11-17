@@ -9,7 +9,7 @@ let rec string_of_expression ( e : expression )
 | Identifier nm -> nm
 | Application (e1,e2) -> (string_of_expression e1)^" ("^
    (string_of_expression e2)^")"
-| Express (e1,e2)->string_of_expression e1^" "^e2
+| Express (e1,nm)->string_of_expression e1^" "^nm
 | Comma (a,b) -> "("^string_of_expression a^" , "^string_of_expression b^")"
 | Colon (a,b) -> string_of_expression a^" : "^string_of_expression b
   
