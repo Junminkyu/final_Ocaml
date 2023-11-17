@@ -79,7 +79,7 @@ expression: //Cons (h:int, t:int)
 |e1=expression;LPAREN;e2=expression;RPAREN{Application(e1,e2)} //when something like cf (x) happens
 
 //Cons (h:int, t:int) -> expression ( expression ) -> expression ( expression1; COMMA; expression2) 
-//->expression ((expression1;COLON;expression2);COMMA;(expression3;COLON;expression4)) -> Cons ((h:int),(t:int))
+//->expression ((expression3;COLON;expression4);COMMA;(expression5;COLON;expression6)) -> IDENT1 ((IDENT2;COLON;IDENT3);COMMA;(IDENT4;COLON;IDENT5)) -> Cons ((h:int),(t:int))
 
 
 
