@@ -3,24 +3,49 @@
  | LetRec of expression * expression *)
  type identifier = string
 
- type typedVar = TypeVariable of (string * string)
+ type typedVar = 
+ |TypeVariable of (string * string)
+
+ type astrik = 
+ |AstrikType of astrik * astrik
+ |LastAstrik of string
  
- type expression =
- |Application of expression * expression
- |Identifier of string
+ type constructor = 
+ |NormalType of string * astrik
+ |SimpleType of string
  
  type hint=
  |Axiom
- (* |Induction of string
- |Direct *)
+ |Induction of string
+
+ type expression =
+ |Application of expression * expression
+ |Comma of expression * expression
+ |Colon of expression * expression
+ |Identifier of string
+ |Express of expression * string
+
+ type element=
+ |Construct of constructor
+ |ArrowStatement of expression * expression
  
- type equality = Equality of (expression * expression)
+ type vert=
+ |Vertical of element 
+
+
+ type equality = 
+ |Equality of (expression * expression)
+
+ type match_statement=
+ |Matching of (string * vert list)
+
+ type declaration = 
+ |ProofDeclaration of (string * typedVar list * equality * hint option)
+ |TypeDeclaration of (string * vert list)
+ |RecDeclaration of (string* typedVar list * string * match_statement)
+
+
  
- type declaration = ProofDeclaration of (string * typedVar list * equality * hint option)
- 
- type decision_level = 
- | DecisionLevDeclaration of declaration
- | DecisionLevExpression of expression
  
  
  

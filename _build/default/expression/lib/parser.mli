@@ -3,11 +3,16 @@
 
 type token = 
   | WITH
+  | VERT
+  | TYPE
   | RPAREN
+  | REC
   | PROVE
+  | OF
   | MATCH
   | LPAREN
   | LET
+  | INDUCTION
   | IDENT of (string)
   | HINT
   | EQUAL
@@ -16,6 +21,7 @@ type token =
   | COMMA
   | COLON
   | AXIOM
+  | ASTRIK
   | ARROW
 
 (* This exception is raised by the monolithic API functions. *)
@@ -24,4 +30,4 @@ exception Error
 
 (* The monolithic API. *)
 
-val main: (Lexing.lexbuf -> token) -> Lexing.lexbuf -> (Ast.decision_level list)
+val main: (Lexing.lexbuf -> token) -> Lexing.lexbuf -> (Ast.declaration list)

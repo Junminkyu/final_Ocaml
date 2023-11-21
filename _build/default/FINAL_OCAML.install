@@ -1,0 +1,5 @@
+lib: [
+  "_build/install/default/lib/FINAL_OCAML/META"
+  "_build/install/default/lib/FINAL_OCAML/dune-package"
+  "_build/install/default/lib/FINAL_OCAML/opam"
+]

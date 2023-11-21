@@ -13,9 +13,16 @@ rule token = parse
  |'=' {EQUAL}
  |"("{LPAREN}
  |")"{RPAREN}
+ |"|"{VERT}
  |"->"{ARROW}
+ |"*"{ASTRIK}
+ |"type" {TYPE}
+ |"of" {OF}
  |"match "{MATCH}
+ |"rec"{REC}
+ |"," {COMMA}
  |"(*hint:" {HINT}
+ |"induction"{INDUCTION}
  |"axiom" {AXIOM}
  |"with" {WITH}
  |"(*" {comment 0 lexbuf} 

@@ -8,3 +8,7 @@ module Lexer = Expression__Lexer
 
 (** @canonical Expression.Parser *)
 module Parser = Expression__Parser
+
+
+(** @canonical Expression.Substitution *)
+module Substitution = Expression__Substitution
