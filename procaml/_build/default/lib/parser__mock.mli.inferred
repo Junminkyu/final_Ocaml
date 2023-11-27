@@ -1,0 +1,26 @@
+type token =
+    RPAREN
+  | PROVE
+  | LPAREN
+  | LET
+  | IDENT of string
+  | HINT
+  | EQUAL
+  | EOF
+  | ENDCOMMENT
+  | COMMA
+  | COLON
+  | AXIOM
+val menhir_begin_marker : int
+val xv_option_hint_ : Ast.hint option
+val xv_main : Ast.declaration list
+val xv_list_declaration_ : Ast.declaration list
+val xv_list_argument_ : Ast.typedVariable list
+val xv_hint : Ast.hint
+val xv_expression_with_commas : Ast.expression
+val xv_expression_eof : Ast.expression
+val xv_expression : Ast.expression
+val xv_equality : Ast.equality
+val xv_declaration : Ast.declaration
+val xv_argument : Ast.typedVariable
+val menhir_end_marker : int

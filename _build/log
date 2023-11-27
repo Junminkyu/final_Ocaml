@@ -1,10 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
-# Workspace root: /home/abdi0405/csci2041/Lab1/final_Ocaml
-$ /usr/bin/nproc > /tmp/dunef73792.output 2> /dev/null
+# Workspace root: /home/jun00020/Documents/final_Ocaml
+$ /usr/bin/nproc > /tmp/dunec614ae.output 2> /dev/null
 # Auto-detected concurrency: 16
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune7654c3.output
+$ /usr/bin/ocamlc.opt -config > /tmp/dunef0d004.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -23,18 +23,18 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune7654c3.output
 #  ; env =
 #      map
 #        { "CAML_LD_LIBRARY_PATH" :
-#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/install/default/lib/stublibs"
+#            "/home/jun00020/Documents/final_Ocaml/_build/install/default/lib/stublibs"
 #        ; "DUNE_OCAML_HARDCODED" : "/usr/lib/ocaml"
 #        ; "DUNE_OCAML_STDLIB" : "/usr/lib/ocaml"
-#        ; "DUNE_SOURCEROOT" : "/home/abdi0405/csci2041/Lab1/final_Ocaml"
+#        ; "DUNE_SOURCEROOT" : "/home/jun00020/Documents/final_Ocaml"
 #        ; "INSIDE_DUNE" :
-#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/default"
+#            "/home/jun00020/Documents/final_Ocaml/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/install/default/lib"
+#            "/home/jun00020/Documents/final_Ocaml/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/install/default/lib"
+#            "/home/jun00020/Documents/final_Ocaml/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/home/abdi0405/csci2041/Lab1/final_Ocaml/_build/install/default/lib/toplevel"
+#            "/home/jun00020/Documents/final_Ocaml/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
@@ -153,3 +153,11 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune7654c3.output
 #      ; windows_unicode = false
 #      }
 #  }
+$ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl procaml/lib/procaml.ml) > _build/default/procaml/lib/.procaml.objs/procaml.ml.d
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I procaml/lib/.procaml.objs/byte -no-alias-deps -opaque -open Procaml__ -o procaml/lib/.procaml.objs/byte/procaml.cmo -c -impl procaml/lib/procaml.ml)
+> File "procaml/lib/procaml.ml", line 63, characters 61-63:
+> 63 |                           (match_expression variables a1 b1) a2 b2
+>                                                                   ^^
+> Error: This expression has type expression
+>        but an expression was expected of type expression list
+[2]

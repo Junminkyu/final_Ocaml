@@ -1,6 +1,0 @@
-(library
- (name halloween))
-
-(menhir (modules parser))
-
-(ocamllex lexer)

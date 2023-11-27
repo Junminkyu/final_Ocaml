@@ -1,0 +1,10 @@
+(** @canonical Dune__exe.Gettingstarted *)
+module Gettingstarted = Dune__exe__Gettingstarted
+
+
+(** @canonical Dune__exe.Moreproofs *)
+module Moreproofs = Dune__exe__Moreproofs
+
+
+(** @canonical Dune__exe.Procaml *)
+module Procaml = Dune__exe__Procaml

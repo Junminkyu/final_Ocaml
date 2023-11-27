@@ -1,0 +1,10 @@
+(** @canonical Procaml.Ast *)
+module Ast = Procaml__Ast
+
+
+(** @canonical Procaml.Lexer *)
+module Lexer = Procaml__Lexer
+
+
+(** @canonical Procaml.Parser *)
+module Parser = Procaml__Parser
