@@ -57,10 +57,11 @@ module Substitution = struct
     (* Screw this part :( *)
     let rec match_expression (variables:string list) (pattern:expression) (goal:expression) : t =
       match pattern, goal with
-      |Identifier pat, _ when List.mem pat variables -> singleton pat goal
-      |Identifier pat, Identifier g when pat=g -> empty
-      |Application(a1,a2), Application(b1,b2) -> merge (match_expression variables a1 b1) (match_expression variables a2 b2)
-      | _, _ ->failwith "ERROR"
+      | Identifier pat, _ when List.mem pat variables -> singleton pat goal
+      | Identifier pat, Identifier g when pat = g -> empty
+      | Application (a1, a2), Application (b1, b2) -> merge (match_expression variables a1 b1) (match_expression variables a2 b2)
+      | _,_->failwith "ERROR"
+
 
     let rec substitute (variables:string list) (map: t) (exp:expression) : expression = 
       match exp with
@@ -79,16 +80,19 @@ module Substitution = struct
           let substitutionMap = match_expression variables pattern exp in
           match substitutionMap with
           | _ when substitutionMap <> empty ->
-            Some (equationNumber, substitute variables substitutionMap goal)
+            let substitutedGoal = substitute variables substitutionMap goal in
+            Some (equationNumber, substitutedGoal)
           | _ -> tryEqualitiesHelper tl
-        in tryEqualitiesHelper equalities
+      in tryEqualitiesHelper equalities
       
     let rec performSteps (equalities : (string * string list * expression * expression) list) (exp : expression) : (string * expression) list=
         match (tryEqualities (equalities) (exp)) with
         |None->[]
-        |Some x-> x::performSteps equalities x
-      
+        |Some (equationNumber, goal)-> (equationNumber,goal)::performSteps equalities goal
+
 
     let print_subst (s:t) = MM.iter (fun k v -> print_endline (k ^" -> "^string_of_expression v)) s
-
 end
+
+
+

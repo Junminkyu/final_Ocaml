@@ -54,15 +54,14 @@ module Substitution = struct
      
     let find=MM.find
      
+    (* Screw this part :( *)
     let rec match_expression (variables:string list) (pattern:expression) (goal:expression) : t =
       match pattern, goal with
-      |Identifier pat, _ when List.mem pat variables -> singleton pat goal
-      |Identifier pat, Identifier g when pat=g -> empty
-      |Application(Identifier a1,a2), Application(Identifier b1,b2) when a1=b1 -> merge (match_expression variables (Identifier a1) (Identifier b1)) (match_expression variables a2 b2)
-      |Application(Application(a1,a2),a3),Application(Identifier _, Application (b1,b2))->(match_expression variables (Application(Application(a1,a2),a3)) (Application(b1,b2)))
-      |Application(Application(a1,a2),a3),Application(Application(b1,b2),b3)->(match_expression variables (Application(Application(a1,a2),a3)) (Application(Application (b1,b2),b3)))
-      |Application (a1,a2), Application (b1,_) -> (match_expression variables (Application(a1,a2)) b1) 
-      | _, _ ->failwith "ERROR"
+      | Identifier pat, _ when List.mem pat variables -> singleton pat goal
+      | Identifier pat, Identifier g when pat = g -> empty
+      | Application (a1, a2), Application (b1, b2) -> merge (match_expression variables a1 b1) (match_expression variables a2 b2)
+      | _,_->failwith "ERROR"
+
 
     let rec substitute (variables:string list) (map: t) (exp:expression) : expression = 
       match exp with
@@ -72,6 +71,7 @@ module Substitution = struct
                         | Not_found -> exp)
       |Application(e1,e2)->Application(substitute(variables)(map)(e1),substitute(variables)(map)(e2))
 
+    
     let tryEqualities (equalities : (string * string list * expression * expression) list) (exp : expression) : (string * expression) option =
       let rec tryEqualitiesHelper equation =
         match equation with
@@ -80,11 +80,22 @@ module Substitution = struct
           let substitutionMap = match_expression variables pattern exp in
           match substitutionMap with
           | _ when substitutionMap <> empty ->
-            Some (equationNumber, substitute variables substitutionMap goal)
+            let substitutedGoal = substitute variables substitutionMap goal in
+            Some (equationNumber, substitutedGoal)
           | _ -> tryEqualitiesHelper tl
-        in tryEqualitiesHelper equalities
+      in tryEqualitiesHelper equalities
       
-     
+    let rec performSteps (equalities : (string * string list * expression * expression) list) (exp : expression) : (string * expression) list=
+        match (tryEqualities (equalities) (exp)) with
+        |None->[]
+        |Some (equationNumber, goal)-> (equationNumber,goal)::performSteps equalities goal
+
+        
+      
+
     let print_subst (s:t) = MM.iter (fun k v -> print_endline (k ^" -> "^string_of_expression v)) s
 
 end
+
+
+

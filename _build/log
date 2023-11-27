@@ -1,10 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
 # Workspace root: /home/jun00020/Documents/final_Ocaml
-$ /usr/bin/nproc > /tmp/dunec614ae.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dune4dd234.output 2> /dev/null
 # Auto-detected concurrency: 16
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dunef0d004.output
+$ /usr/bin/ocamlc.opt -config > /tmp/duneac5c55.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -155,9 +155,10 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dunef0d004.output
 #  }
 $ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl procaml/lib/procaml.ml) > _build/default/procaml/lib/.procaml.objs/procaml.ml.d
 $ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I procaml/lib/.procaml.objs/byte -no-alias-deps -opaque -open Procaml__ -o procaml/lib/.procaml.objs/byte/procaml.cmo -c -impl procaml/lib/procaml.ml)
-> File "procaml/lib/procaml.ml", line 63, characters 61-63:
-> 63 |                           (match_expression variables a1 b1) a2 b2
->                                                                   ^^
-> Error: This expression has type expression
->        but an expression was expected of type expression list
-[2]
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o procaml/lib/procaml.cma procaml/lib/.procaml.objs/byte/procaml__.cmo procaml/lib/.procaml.objs/byte/procaml__Ast.cmo procaml/lib/.procaml.objs/byte/procaml__Parser.cmo procaml/lib/.procaml.objs/byte/procaml__Lexer.cmo procaml/lib/.procaml.objs/byte/procaml.cmo)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I procaml/lib/.procaml.objs/byte -I procaml/lib/.procaml.objs/native -intf-suffix .ml -no-alias-deps -opaque -open Procaml__ -o procaml/lib/.procaml.objs/native/procaml.cmx -c -impl procaml/lib/procaml.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -a -o procaml/lib/procaml.cmxa procaml/lib/.procaml.objs/native/procaml__.cmx procaml/lib/.procaml.objs/native/procaml__Ast.cmx procaml/lib/.procaml.objs/native/procaml__Parser.cmx procaml/lib/.procaml.objs/native/procaml__Lexer.cmx procaml/lib/.procaml.objs/native/procaml.cmx)
+$ (cd _build/default && /usr/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -I procaml/bin/.main.eobjs/byte -I procaml/lib/.procaml.objs/byte -no-alias-deps -opaque -o procaml/bin/.main.eobjs/byte/dune__exe__Main.cmo -c -impl procaml/bin/main.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -shared -linkall -I procaml/lib -o procaml/lib/procaml.cmxs procaml/lib/procaml.cmxa)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I procaml/bin/.main.eobjs/byte -I procaml/bin/.main.eobjs/native -I procaml/lib/.procaml.objs/byte -I procaml/lib/.procaml.objs/native -intf-suffix .ml -no-alias-deps -opaque -o procaml/bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl procaml/bin/main.ml)
+$ (cd _build/default && /usr/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o procaml/bin/main.exe procaml/lib/procaml.cmxa procaml/bin/.main.eobjs/native/dune__exe__Main.cmx)
