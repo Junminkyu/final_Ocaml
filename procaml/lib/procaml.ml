@@ -43,26 +43,34 @@ module Substitution = struct
     let empty = MM.empty
     let singleton = MM.singleton
        
+    exception Match_expr_exception
     let merge map1 map2=
       let helper _ m1 m2 =
         match m1, m2 with
         |Some m, None -> Some m
         |None, Some m->Some m
-        |Some m1, Some m2 -> if m1=m2 then (Some m1) else None
+        |Some m1, Some m2 -> if m1=m2 then (Some m1) else Match_expr_exception
         |None, None -> None
       in MM.merge helper map1 map2
      
     let find=MM.find
-     
     (* Screw this part :( *)
     let rec match_expression (variables:string list) (pattern:expression) (goal:expression) : t =
       match pattern, goal with
-      | Identifier pat, _ when List.mem pat variables -> singleton pat goal
-      | Identifier pat, Identifier g when pat = g -> empty
+      | Identifier pattern, _ when List.mem pattern variables -> singleton pattern goal
+      | Identifier pattern, Identifier goal when pattern = goal -> empty
       | Application (a1, a2), Application (b1, b2) -> merge (match_expression variables a1 b1) (match_expression variables a2 b2)
-      | _,_->failwith "ERROR"
+      | _,_->raise Match_expr_exception
 
+    let rec tryStep variables lhs rhs expr
+      = match match_expression variables lhs expr with
+         s -> Some rhs (* fix: use substitution *)
+         | exception Match_expr_exception -> (match expr with
+            | Identifier _ -> None
+            | Application a b -> try a first, then try b
+            )
 
+      
     let rec substitute (variables:string list) (map: t) (exp:expression) : expression = 
       match exp with
       |Identifier nm -> (try
@@ -89,6 +97,8 @@ module Substitution = struct
         match (tryEqualities (equalities) (exp)) with
         |None->[]
         |Some (equationNumber, goal)-> (equationNumber,goal)::performSteps equalities goal
+
+    
 
 
     let print_subst (s:t) = MM.iter (fun k v -> print_endline (k ^" -> "^string_of_expression v)) s

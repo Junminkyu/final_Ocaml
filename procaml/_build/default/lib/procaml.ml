@@ -57,9 +57,10 @@ module Substitution = struct
     (* Screw this part :( *)
     let rec match_expression (variables:string list) (pattern:expression) (goal:expression) : t =
       match pattern, goal with
-      | Identifier pat, _ when List.mem pat variables -> singleton pat goal
-      | Identifier pat, Identifier g when pat = g -> empty
+      | Identifier pattern, _ when List.mem pattern variables -> singleton pattern goal
+      | Identifier pattern, Identifier goal when pattern = goal -> empty
       | Application (a1, a2), Application (b1, b2) -> merge (match_expression variables a1 b1) (match_expression variables a2 b2)
+      | Application (a1 ,a2), Identifier g -> merge (match_expression (variables) (a1) (Identifier g)) (match_expression (variables) (a2) (Identifier g))
       | _,_->failwith "ERROR"
 
 
@@ -90,11 +91,10 @@ module Substitution = struct
         |None->[]
         |Some (equationNumber, goal)-> (equationNumber,goal)::performSteps equalities goal
 
-        
-      
+    
+
 
     let print_subst (s:t) = MM.iter (fun k v -> print_endline (k ^" -> "^string_of_expression v)) s
-
 end
 
 
