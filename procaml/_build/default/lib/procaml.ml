@@ -82,28 +82,15 @@ module Substitution = struct
                         | Not_found -> exp)
       |Application(e1,e2)->Application(substitute(variables)(map)(e1),substitute(variables)(map)(e2))
 
-      (* let rec attempt_rewrite variables lhs rhs expression =
-        match match_expression variables lhs expression with
-        | Some x -> Some (substitute variables x rhs)
-        | None -> (
-            match expression with
-            | Application (e1, e2) ->
-                (match (attempt_rewrite variables lhs rhs e1), (attempt_rewrite variables lhs rhs e2) with
-                |None,None->None
-                |Some r, None -> Some (Application (r, e2))
-                | None, Some r -> Some (Application(e1,r))
-                | Some e1', Some e2' -> Some (Application (e1', e2'))
-                )
-            | _ -> None
-          ) *)
+      
 
-  let rec attempt_rewrite vars lhs rhs e = 
-    match (match_expression vars lhs e) with
-          | Some subst -> Some (substitute vars subst rhs)
-          | None -> 
-              (
-                match e with
-                | Application (e1, e2) -> 
+    let rec attempt_rewrite vars lhs rhs e = 
+      match (match_expression vars lhs e) with
+      | Some subst -> Some (substitute vars subst rhs)
+      | None -> 
+            (
+              match e with
+              | Application (e1, e2) -> 
                   (
                     match (attempt_rewrite vars lhs rhs e1), (attempt_rewrite vars lhs rhs e2) with
                     | None, None -> None
@@ -111,8 +98,8 @@ module Substitution = struct
                     | None, Some r -> Some (Application (e1, r))
                     | Some r1, Some r2 -> Some (Application (r1, r2))
                   )
-                | _ -> None
-              )
+              | _ -> None
+            )
     
   let rec perform_step rules expression = 
     match rules with
@@ -135,7 +122,12 @@ module Substitution = struct
       let rec prove rules lhs rhs
       = string_of_expression lhs:: (match perform_steps rules lhs with
                                     |(nm,e):: _ -> (" ={ "^nm^" }")::prove rules e rhs
-                                    |[]->if lhs=rhs then [] else "= {???}"::[string_of_expression rhs])
+                                    |[] when lhs=rhs-> [] 
+                                    |[]->(match perform_steps rules rhs with
+                                                                |(nm,e)::_-> (" ={ "^nm^" }")::prove rules e lhs
+                                                                |[] when lhs = rhs ->[]
+                                                                |[]-> "={???}" :: [string_of_expression rhs]))
+
     
     
     let rec prover rules declarations =

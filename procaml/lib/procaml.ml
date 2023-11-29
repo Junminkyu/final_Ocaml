@@ -122,7 +122,12 @@ module Substitution = struct
       let rec prove rules lhs rhs
       = string_of_expression lhs:: (match perform_steps rules lhs with
                                     |(nm,e):: _ -> (" ={ "^nm^" }")::prove rules e rhs
-                                    |[]->if lhs=rhs then [] else "= {???}"::[string_of_expression rhs])
+                                    |[] when lhs=rhs-> [] 
+                                    |[]->(match perform_steps rules rhs with
+                                                                |(nm,e)::_-> (" ={ "^nm^" }")::prove rules e lhs
+                                                                |[] when lhs = rhs ->[]
+                                                                |[]-> "={???}" :: [string_of_expression rhs]))
+
     
     
     let rec prover rules declarations =
