@@ -86,7 +86,7 @@ module Substitution = struct
 
     let rec attempt_rewrite vars lhs rhs e = 
       match (match_expression vars lhs e) with
-      | Some subst -> Some (substitute vars subst rhs)
+      | Some map -> Some (substitute vars map rhs)
       | None -> 
             (
               match e with
@@ -94,9 +94,9 @@ module Substitution = struct
                   (
                     match (attempt_rewrite vars lhs rhs e1), (attempt_rewrite vars lhs rhs e2) with
                     | None, None -> None
-                    | Some r, None -> Some (Application (r, e2))
-                    | None, Some r -> Some (Application (e1, r))
-                    | Some r1, Some r2 -> Some (Application (r1, r2))
+                    | Some a, None -> Some (Application (a, e2))
+                    | None, Some b -> Some (Application (e1, b))
+                    | Some a, Some b -> Some (Application (a, b))
                   )
               | _ -> None
             )

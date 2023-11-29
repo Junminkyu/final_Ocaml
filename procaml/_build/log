@@ -1,10 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
 # Workspace root: /home/jun00020/Documents/final_Ocaml/procaml
-$ /usr/bin/nproc > /tmp/duned12c8b.output 2> /dev/null
+$ /usr/bin/nproc > /tmp/dunedbc6d5.output 2> /dev/null
 # Auto-detected concurrency: 16
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune2e9230.output
+$ /usr/bin/ocamlc.opt -config > /tmp/duned0981e.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
