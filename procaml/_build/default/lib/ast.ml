@@ -1,5 +1,5 @@
 type typevariant = Variant of (string * string list)
-type typedVariable = TypedVariable of (string * string)
+type typedVariable = TypedVariable of (string * string) 
 
 type expression
  = Application of (expression * expression)

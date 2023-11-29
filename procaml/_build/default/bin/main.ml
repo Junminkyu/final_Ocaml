@@ -78,6 +78,27 @@ let with_file fn (filename : string) : unit
             (Stdlib.open_in_gen [ Open_rdonly ] 0o000 filename)
             Stdlib.close_in
 
+
+(* let rec proofs_of_simple eqs (lst : declaration list) =
+   match lst with
+   | [] -> []
+   | (ProofDeclaration (nm,vars,eq,hint))::decls
+      -> (match hint with
+   | None -> (("Proof of "^nm^": ") :: ["TODO"])
+               :: (proofs_of_simple ((nm,vars,eq)::eqs)
+               decls)
+   | _ -> proofs_of_simple ((nm,vars,eq)::eqs)
+               decls )
+   | _::decls -> proofs_of_simple eqs decls
+               
+
+let produce_output_simple (lst : declaration list)
+= print_endline (String.concat "\n\n"
+   (List.map (String.concat "\n")
+      (proofs_of_simple [] lst))) *)
+
+
+
 (***********************************************************)
 (* here's the code for dealing with command line arguments *)
 (***********************************************************)
@@ -92,7 +113,7 @@ let usage_msg = Sys.executable_name ^ " [--printback <filename>]"
    Note that "Arg.String" takes a function of type: string -> unit.
    This is where we plug in the 'with_file' function we wrote above. *)
 let speclist =
-  [("--printback", Arg.String (with_file print_all), "Print the parsed file back out")]
+  [("--printback", Arg.String (with_file print_all), "Print the parsed file back out");("--simple", Arg.String (with_file Procaml.prover_main), "Parse the file, but don't print anything")]
 
 let _ = Arg.parse
            speclist

@@ -43,66 +43,110 @@ module Substitution = struct
     let empty = MM.empty
     let singleton = MM.singleton
        
-    exception Match_expr_exception
+    (* exception Match_expr_exception *)
     let merge map1 map2=
       let helper _ m1 m2 =
         match m1, m2 with
+        |None, None -> None
         |Some m, None -> Some m
         |None, Some m->Some m
-        |Some m1, Some m2 -> if m1=m2 then (Some m1) else Match_expr_exception
-        |None, None -> None
+        |Some m1, Some m2 when m1=m2 -> Some m1 
+        |Some _, Some _ -> None
       in MM.merge helper map1 map2
      
     let find=MM.find
-    (* Screw this part :( *)
-    let rec match_expression (variables:string list) (pattern:expression) (goal:expression) : t =
-      match pattern, goal with
-      | Identifier pattern, _ when List.mem pattern variables -> singleton pattern goal
-      | Identifier pattern, Identifier goal when pattern = goal -> empty
-      | Application (a1, a2), Application (b1, b2) -> merge (match_expression variables a1 b1) (match_expression variables a2 b2)
-      | _,_->raise Match_expr_exception
+    end
 
-    let rec tryStep variables lhs rhs expr
-      = match match_expression variables lhs expr with
-         s -> Some rhs (* fix: use substitution *)
-         | exception Match_expr_exception -> (match expr with
-            | Identifier _ -> None
-            | Application a b -> try a first, then try b
-            )
+    
+    let rec match_expression variables pattern expression =
+      match pattern with
+        | Identifier x -> if List.mem x variables then Some (Substitution.singleton x expression)
+                          else (if pattern = expression then Some Substitution.empty else None)
+        | Application (p1, p2) -> 
+          (match expression with
+              | Application (e1, e2) ->
+                      (* We recursively match the sub-expressions.
+                          This part is much easier to write if e2 is an expression (and it is for this particular ast),
+                          because it's so symmetrical *)
+                      (match match_expression variables p1 e1, match_expression variables p2 e2 with
+                      | Some s1, Some s2 -> Some(Substitution.merge s2 s1)
+                      | _ -> None)
+                  | _ -> None)
 
-      
-    let rec substitute (variables:string list) (map: t) (exp:expression) : expression = 
+
+    let rec substitute (variables:string list) (map: Substitution.t) (exp:expression) : expression = 
       match exp with
       |Identifier nm -> (try
-                          find nm map
+                          Substitution.find nm map
                         with
                         | Not_found -> exp)
       |Application(e1,e2)->Application(substitute(variables)(map)(e1),substitute(variables)(map)(e2))
 
-    
-    let tryEqualities (equalities : (string * string list * expression * expression) list) (exp : expression) : (string * expression) option =
-      let rec tryEqualitiesHelper equation =
-        match equation with
-        | [] -> None
-        | (equationNumber, variables, pattern, goal) :: tl ->
-          let substitutionMap = match_expression variables pattern exp in
-          match substitutionMap with
-          | _ when substitutionMap <> empty ->
-            let substitutedGoal = substitute variables substitutionMap goal in
-            Some (equationNumber, substitutedGoal)
-          | _ -> tryEqualitiesHelper tl
-      in tryEqualitiesHelper equalities
       
-    let rec performSteps (equalities : (string * string list * expression * expression) list) (exp : expression) : (string * expression) list=
-        match (tryEqualities (equalities) (exp)) with
-        |None->[]
-        |Some (equationNumber, goal)-> (equationNumber,goal)::performSteps equalities goal
+
+    let rec attempt_rewrite vars lhs rhs e = 
+      match (match_expression vars lhs e) with
+      | Some subst -> Some (substitute vars subst rhs)
+      | None -> 
+            (
+              match e with
+              | Application (e1, e2) -> 
+                  (
+                    match (attempt_rewrite vars lhs rhs e1), (attempt_rewrite vars lhs rhs e2) with
+                    | None, None -> None
+                    | Some r, None -> Some (Application (r, e2))
+                    | None, Some r -> Some (Application (e1, r))
+                    | Some r1, Some r2 -> Some (Application (r1, r2))
+                  )
+              | _ -> None
+            )
+    
+  let rec perform_step rules expression = 
+    match rules with
+    |(nm,variables,lhs,rhs):: rest -> (match attempt_rewrite variables lhs rhs expression with
+                                            |Some e-> Some (nm,e)
+                                            |None->perform_step rest expression)
+    |_->None  
+
+    let rec perform_steps rules expression = match perform_step rules expression with
+    |None ->[]
+    |Some (nm,e)-> (nm,e):: perform_steps rules e
+
+  
+    
+    let rec get_string (vars:typedVariable list): string list=
+      match vars with
+      |[]->[]
+      |TypedVariable(a,_)::tl-> a::get_string tl
+
+      let rec prove rules lhs rhs
+      = string_of_expression lhs:: (match perform_steps rules lhs with
+                                    |(nm,e):: _ -> (" ={ "^nm^" }")::prove rules e rhs
+                                    |[]->if lhs=rhs then [] else "= {???}"::[string_of_expression rhs])
+    
+    
+    let rec prover rules declarations =
+      match declarations with
+      | ProofDeclaration (nm, vars, Equality (lhs,rhs), None) :: rest
+         -> (* no hint, so let's prove this *)
+            prove rules lhs rhs :: prover ((nm,get_string(vars),lhs,rhs)::rules) rest
+      | ProofDeclaration (nm, vars, Equality (lhs,rhs), _) :: rest
+         -> (* we got a hint so we simply assume the statement *)
+            prover ((nm,get_string(vars),lhs,rhs)::rules) rest
+      | [] -> []
+
+      let prover_main decls =
+        prover [] decls |>
+        List.map (String.concat "\n") |>
+        String.concat "\n\n" |>
+        print_endline
 
     
+    let print_subst (s:Substitution.t) = Substitution.MM.iter (fun k v -> print_endline (k ^" -> "^string_of_expression v)) s
 
 
-    let print_subst (s:t) = MM.iter (fun k v -> print_endline (k ^" -> "^string_of_expression v)) s
-end
+
+
 
 
 
